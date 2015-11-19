@@ -1,9 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-
-typedef int bool;
-#define true  1
-#define false 0
+#include "constant_values.h"
 
 int getInputArgument(int, char**);
 bool isInputArgumentSet(int argc);
