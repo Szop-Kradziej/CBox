@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
 	
 	numberOfPolyhedronPoints = getInputArgument(argc, argv);
 	printf("Number of polyhedron points: %d\n", numberOfPolyhedronPoints);
-	rng();
+	isNumberInBounduaries();
 	
 	return 0;
 }

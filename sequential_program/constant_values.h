@@ -10,8 +10,8 @@ typedef int bool;
 #define false 0
 
 typedef struct Point{
-	int x;
-	int y;
+	double x;
+	double y;
 } Point;
 
 #endif

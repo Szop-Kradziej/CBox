@@ -1,6 +1,11 @@
+#include "constant_values.h"
+
 #ifndef RANDOM_NUMBER_GENERATOR
 #define RANDOM_NUMBER_GENERATOR
 
-void rng();
+Point* createPointsInBounduaries(int numberOfPoints);
+Point createPointInBounduaries();
+bool isPointInBounduaries(Point);
+bool isNumberInBounduaries(double);
 
 #endif
