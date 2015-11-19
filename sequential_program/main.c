@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "constant_values.h"
+#include "random_number_generator.h"
 
 int getInputArgument(int, char**);
 bool isInputArgumentSet(int argc);
@@ -11,6 +12,7 @@ int main(int argc, char* argv[]) {
 	
 	numberOfPolyhedronPoints = getInputArgument(argc, argv);
 	printf("Number of polyhedron points: %d\n", numberOfPolyhedronPoints);
+	rng();
 	
 	return 0;
 }
