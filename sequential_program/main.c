@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "constant_values.h"
 #include "random_number_generator.h"
 
@@ -9,10 +10,11 @@ bool isInputArgumentSet(int argc);
 int main(int argc, char* argv[]) {
 	
 	int numberOfPolyhedronPoints;
+	Point *points;
+	srand(time(NULL));
 	
 	numberOfPolyhedronPoints = getInputArgument(argc, argv);
-	printf("Number of polyhedron points: %d\n", numberOfPolyhedronPoints);
-	isNumberInBounduaries();
+	points = generatePointsInBounduaries(numberOfPolyhedronPoints);
 	
 	return 0;
 }
