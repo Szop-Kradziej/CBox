@@ -3,18 +3,19 @@
 #include <time.h>
 #include "constant_values.h"
 #include "random_number_generator.h"
+#include "minimum_radius_constraint.h"
 
 int getInputArgument(int, char**);
-bool isInputArgumentSet(int argc);
+bool isInputArgumentSet(int);
+void computeComplexBoxSolution(int);
 
 int main(int argc, char* argv[]) {
 	
 	int numberOfPolyhedronPoints;
-	Point *points;
 	srand(time(NULL));
 	
 	numberOfPolyhedronPoints = getInputArgument(argc, argv);
-	points = generatePointsInBounduaries(numberOfPolyhedronPoints);
+	computeComplexBoxSolution(numberOfPolyhedronPoints);
 	
 	return 0;
 }
@@ -41,3 +42,10 @@ bool isInputArgumentSet(int argc) {
 	return false;
 }
 
+void computeComplexBoxSolution(int numberOfPolyhedronPoints) {
+	Point* startPoints;
+	int isMRCF;
+	startPoints = generatePointsInBounduaries(numberOfPolyhedronPoints);
+	isMRCF = isMinimumRadiusConstraintFulfiled(startPoints);
+	printf("MRCF: %d\n", isMRCF);
+}

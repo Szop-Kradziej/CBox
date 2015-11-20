@@ -4,6 +4,7 @@
 #define LOWER_POINT_BOUNDARY -40
 #define UPPER_POINT_BOUNDARY 40
 #define ALPHA 1.3
+#define EPSILON 1
 
 typedef int bool;
 #define true  1
