@@ -3,7 +3,7 @@
 #ifndef RANDOM_NUMBER_GENERATOR
 #define RANDOM_NUMBER_GENERATOR
 
-Point* generatePointsInBounduaries(int numberOfPoints);
+void generatePointsInBounduaries(Point startPoints[], int numberOfPoints);
 Point generatePointInBounduaries();
 double generateNumberInBoundaries();
 bool isPointInBounduaries(Point);

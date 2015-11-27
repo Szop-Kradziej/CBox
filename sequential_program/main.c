@@ -42,10 +42,10 @@ bool isInputArgumentSet(int argc) {
 	return false;
 }
 
-void computeComplexBoxSolution(int numberOfPolyhedronPoints) {
-	Point* startPoints;
+void computeComplexBoxSolution(const int numberOfPolyhedronPoints) {
+	Point startPoints[numberOfPolyhedronPoints];
 	int isMRCF;
-	startPoints = generatePointsInBounduaries(numberOfPolyhedronPoints);
-	isMRCF = isMinimumRadiusConstraintFulfiled(startPoints);
+	generatePointsInBounduaries(startPoints, numberOfPolyhedronPoints);
+	isMRCF = isMinimumRadiusConstraintFulfiled(startPoints, numberOfPolyhedronPoints);
 	printf("MRCF: %d\n", isMRCF);
 }

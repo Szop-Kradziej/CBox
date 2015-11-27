@@ -3,17 +3,14 @@
 #include <time.h>
 #include "random_number_generator.h"
 
-Point* generatePointsInBounduaries(int numberOfPoints) {
-	Point points[numberOfPoints];
+void generatePointsInBounduaries(Point startPoints[], int numberOfPoints) {
 	int i ;
 	
 	for(i = 0; i < numberOfPoints; i++)
 	{
-		points[i] = generatePointInBounduaries();
-		printf("point: %lf, %lf\n", points[i].x, points[i].y);
+		startPoints[i] = generatePointInBounduaries();
+		printf("point: %lf, %lf\n", startPoints[i].x, startPoints[i].y);
 	}
-	
-	return points;
 }
 
 Point generatePointInBounduaries() {
