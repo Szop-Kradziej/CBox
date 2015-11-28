@@ -5,7 +5,7 @@
 
 void calculatePointsObjectiveFunctionValue(Point*, int, double*);
 double calculateObjectiveFunctionValue(double*);
-//bool isAdditionalConstraintFulfilled(Point*, int);
-//double calculateLeftSideOfAdditionalConstraint(Point*, int);
+bool isAdditionalConstraintFulfilled(double*);
+double calculateLeftSideOfAdditionalConstraint(double*);
 
 #endif
