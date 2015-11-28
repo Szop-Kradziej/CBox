@@ -52,8 +52,8 @@ void computeComplexBoxSolution(const int numberOfPolyhedronPoints) {
 	generatePointsInBounduaries(startPoints, numberOfPolyhedronPoints);
 	calculatePointsObjectiveFunctionValue(startPoints, numberOfPolyhedronPoints, objectiveValues);
 	
-	printPoints(startPoints, numberOfPolyhedronPoints);
-	printDoubleGroup(objectiveValues, numberOfPolyhedronPoints);
+	//printPoints(startPoints, numberOfPolyhedronPoints);
+	//printDoubleGroup(objectiveValues, numberOfPolyhedronPoints);
 /*	
 	if(isMinimumRadiusConstraintFulfiled(startPoints, numberOfPolyhedronPoints)) {
 		printf("MRCF: fulfiled");

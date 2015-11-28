@@ -7,6 +7,8 @@
 #define EPSILON 1
 #define NUMBER_OF_COORDINATORS 5
 
+#define MAX_TRY_OF_MOVE_POINT 10
+
 typedef int bool;
 #define true  1
 #define false 0

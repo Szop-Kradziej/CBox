@@ -5,7 +5,9 @@
 
 void movePointUntilAdditionalConstraintBeFulfilled(Point*, int);
 Point calculateCentroid(Point*, int);
+Point setCentroidCoordinatorsToAcceptable();
 double calculateCentroidCoordinator(Point*, int, int);
 void movePointHalfWayToCentroid(Point*, Point);
+double calculateHalfWayToCentroidCoordinator(double, double);
 
 #endif
