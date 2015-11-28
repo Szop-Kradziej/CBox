@@ -71,3 +71,70 @@ void movePointHalfWayToCentroid(Point* point, Point centroid) {
 double calculateHalfWayToCentroidCoordinator(double coordinator, double centroidCoordinator) {
 	return (coordinator + centroidCoordinator) / 2;
 }
+
+Point reflectPoint(Point points[], int numberOfPoints) {
+	Point centroid, reflectedPoint;
+	int indexOfMaxValuePoint;
+	
+	indexOfMaxValuePoint = findPointIndexOfMaximumObjectiveFunctionValue(points, numberOfPoints);
+	centroid = calculateCentroidExpectPointOfMaxValue(points, numberOfPoints, indexOfMaxValuePoint);
+	reflectedPoint = generateReflectedPoint(points[indexOfMaxValuePoint], centroid);
+	
+	return reflectedPoint;
+}
+
+int findPointIndexOfMaximumObjectiveFunctionValue(Point points[], int numberOfPoints) {
+	int maxValueIndex, i;
+	maxValueIndex = 0;
+	
+	for(i = 1; i < numberOfPoints; i++) {
+		if(points[i].objectiveFunctionValue > points[maxValueIndex].objectiveFunctionValue) {
+			maxValueIndex = i;
+		}
+	}
+	
+	return maxValueIndex;
+}
+
+Point calculateCentroidExpectPointOfMaxValue(Point points[], int numberOfPoints, int indexOfMaxValuePoint)
+{
+	Point centroid;
+	int i;
+
+	for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
+		centroid.coordinators[i] = calculateCentroidCoordinatorExpectPointOfMaxValue(points, numberOfPoints, i, indexOfMaxValuePoint);
+	}
+	
+	return centroid;
+}
+
+double calculateCentroidCoordinatorExpectPointOfMaxValue(Point points[], int numberOfPoints, int coordinatorIndex, int indexOfMaxValuePoint) {
+	double sum, centroidCoordinator;
+	int i;
+	sum = 0.0;
+	
+	for(i = 0; i < numberOfPoints; i++) {
+		sum += points[i].coordinators[coordinatorIndex];
+	}
+	
+	sum -= points[indexOfMaxValuePoint].coordinators[coordinatorIndex];
+	
+	centroidCoordinator = sum / (numberOfPoints - 1);
+	
+	return centroidCoordinator;
+}
+
+Point generateReflectedPoint(Point maxValuePoint, Point centroid) {
+	Point reflectedPoint;
+	int i;
+	
+	for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
+		reflectedPoint.coordinators[i] = calculateReflectedPointCoordinator(maxValuePoint.coordinators[i],centroid.coordinators[i]);
+	}
+	
+	return reflectedPoint;
+}
+
+double calculateReflectedPointCoordinator(double maxValueCoordinator, double centroidCoordinator) {
+	return (1 + ALPHA)*centroidCoordinator - ALPHA*maxValueCoordinator;
+}
