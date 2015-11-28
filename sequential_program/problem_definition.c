@@ -3,11 +3,11 @@
 #include <math.h>
 #include "problem_definition.h"
 
-void calculatePointsObjectiveFunctionValue(Point points[], int numberOfPoints, double objectiveFunctionValues[]) {
+void calculatePointsObjectiveFunctionValue(Point points[], int numberOfPoints) {
 	int i;
 	 
 	for(i = 0; i < numberOfPoints; i++) {
-		objectiveFunctionValues[i] = calculateObjectiveFunctionValue(points[i].coordinators);
+		points[i].objectiveFunctionValue = calculateObjectiveFunctionValue(points[i].coordinators);
 	}
 }
 

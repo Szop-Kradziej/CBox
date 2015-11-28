@@ -15,6 +15,7 @@ typedef int bool;
 
 typedef struct Point{
 	double coordinators[NUMBER_OF_COORDINATORS];
+	double objectiveFunctionValue;
 } Point;
 
 #endif
