@@ -8,17 +8,22 @@ void generatePointsInBounduaries(Point startPoints[], int numberOfPoints) {
 	
 	for(i = 0; i < numberOfPoints; i++)
 	{
-		startPoints[i] = generatePointInBounduaries();
-		printf("point: %lf, %lf\n", startPoints[i].x, startPoints[i].y);
+		generateCoordinatorsInBounduaries(startPoints[i].coordinators);
 	}
 }
 
-Point generatePointInBounduaries() {
-	Point point;
-	point.x = generateNumberInBoundaries();
-	point.y = generateNumberInBoundaries();
+void generateCoordinatorsInBounduaries(double coordinators[]) {
+	int i;
 	
-	return point;
+	for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
+		coordinators[i] = generateCoordinatorInBounduaries();
+	}
+}
+
+double generateCoordinatorInBounduaries() {
+	double coordinator;
+	coordinator = generateNumberInBoundaries();
+	return coordinator;
 }
 
 double generateNumberInBoundaries() {
@@ -28,8 +33,8 @@ double generateNumberInBoundaries() {
 	return randomNumber;
 }
 
-bool isPointInBounduaries(Point point) {
-	if(isNumberInBounduaries(point.x) && isNumberInBounduaries(point.y)) {
+bool isCoordinatorInBounduaries(double coordinator) {
+	if(isNumberInBounduaries(coordinator)) {
 		return true;
 	}
 	return false;

@@ -3,11 +3,14 @@
 #include <time.h>
 #include "constant_values.h"
 #include "random_number_generator.h"
-#include "minimum_radius_constraint.h"
+//#include "minimum_radius_constraint.h"
+//#include "problem_definition.h"
 
 int getInputArgument(int, char**);
 bool isInputArgumentSet(int);
 void computeComplexBoxSolution(int);
+void printPoints(Point*, int);
+void printPoint(double*);
 
 int main(int argc, char* argv[]) {
 	
@@ -44,8 +47,33 @@ bool isInputArgumentSet(int argc) {
 
 void computeComplexBoxSolution(const int numberOfPolyhedronPoints) {
 	Point startPoints[numberOfPolyhedronPoints];
-	int isMRCF;
+	
 	generatePointsInBounduaries(startPoints, numberOfPolyhedronPoints);
-	isMRCF = isMinimumRadiusConstraintFulfiled(startPoints, numberOfPolyhedronPoints);
-	printf("MRCF: %d\n", isMRCF);
+	
+	printPoints(startPoints, numberOfPolyhedronPoints);
+	/*calculateYPointCoordinatorForPoints(startPoints, numberOfPolyhedronPoints);
+	printPoints(startPoints, numberOfPolyhedronPoints);
+	
+	if(isMinimumRadiusConstraintFulfiled(startPoints, numberOfPolyhedronPoints)) {
+		printf("MRCF: fulfiled");
+		exit(0);
+	}*/
+}
+
+void printPoints(Point points[], int numberOfPoints) {
+	int i;
+	
+	for(i = 0; i < numberOfPoints; i++) {
+		printf("Point number: %d \n", i);
+		printPoint(points[i].coordinators);
+	}
+}
+
+void printPoint(double coordinators[]) {
+	int i;
+	
+	for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
+		printf("%lf, ", coordinators[i]);
+	}
+	printf("\n");
 }

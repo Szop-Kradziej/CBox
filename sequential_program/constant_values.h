@@ -5,14 +5,14 @@
 #define UPPER_POINT_BOUNDARY 40
 #define ALPHA 1.3
 #define EPSILON 1
+#define NUMBER_OF_COORDINATORS 5
 
 typedef int bool;
 #define true  1
 #define false 0
 
 typedef struct Point{
-	double x;
-	double y;
+	double coordinators[NUMBER_OF_COORDINATORS];
 } Point;
 
 #endif

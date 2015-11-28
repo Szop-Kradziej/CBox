@@ -4,9 +4,10 @@
 #define RANDOM_NUMBER_GENERATOR
 
 void generatePointsInBounduaries(Point startPoints[], int numberOfPoints);
-Point generatePointInBounduaries();
+void generateCoordinatorsInBounduaries(double*);
+double generateCoordinatorInBounduaries();
 double generateNumberInBoundaries();
-bool isPointInBounduaries(Point);
+bool isCoordinatorInBounduaries(double);
 bool isNumberInBounduaries(double);
 
 #endif
