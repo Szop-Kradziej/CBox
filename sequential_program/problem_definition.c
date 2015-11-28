@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
 #include <math.h>
 #include "problem_definition.h"
 
@@ -27,6 +26,7 @@ bool isAdditionalConstraintFulfilled(double coordinators[]) {
 	double leftSideAdditionalConstraintValue;
 	
 	leftSideAdditionalConstraintValue = calculateLeftSideOfAdditionalConstraint(coordinators);
+	printf("Left side %lf", leftSideAdditionalConstraintValue);
 	if(leftSideAdditionalConstraintValue <= 10 * NUMBER_OF_COORDINATORS) {
 		return true;
 	}

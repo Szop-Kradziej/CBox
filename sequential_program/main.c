@@ -3,7 +3,7 @@
 #include <time.h>
 #include "constant_values.h"
 #include "random_number_generator.h"
-//#include "minimum_radius_constraint.h"
+#include "minimum_radius_constraint.h"
 #include "problem_definition.h"
 
 int getInputArgument(int, char**);
@@ -50,12 +50,11 @@ void computeComplexBoxSolution(const int numberOfPolyhedronPoints) {
 	double objectiveValues[numberOfPolyhedronPoints];
 	
 	generatePointsInBounduaries(startPoints, numberOfPolyhedronPoints);
+	calculatePointsObjectiveFunctionValue(startPoints, numberOfPolyhedronPoints, objectiveValues);
 	
 	printPoints(startPoints, numberOfPolyhedronPoints);
-	calculatePointsObjectiveFunctionValue(startPoints, numberOfPolyhedronPoints, objectiveValues);
 	printDoubleGroup(objectiveValues, numberOfPolyhedronPoints);
-	
-	/*
+/*	
 	if(isMinimumRadiusConstraintFulfiled(startPoints, numberOfPolyhedronPoints)) {
 		printf("MRCF: fulfiled");
 		exit(0);
