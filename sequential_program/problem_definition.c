@@ -43,3 +43,27 @@ double calculateLeftSideOfAdditionalConstraint(double coordinators[]) {
 	}
 	return leftSideAdditionalConstraintValue;
 }
+
+bool isPointInBounduaries(Point point) {
+	int i;
+	for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
+		if(!isCoordinatorInBounduaries(point.coordinators[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool isCoordinatorInBounduaries(double coordinator) {
+	if(isNumberInBounduaries(coordinator)) {
+		return true;
+	}
+	return false;
+}
+
+bool isNumberInBounduaries(double number) {
+	if(LOWER_POINT_BOUNDARY<= number && number <= UPPER_POINT_BOUNDARY) {
+		return true;
+	}
+	return false;
+}

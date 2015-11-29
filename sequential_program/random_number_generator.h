@@ -7,7 +7,5 @@ void generatePointsInBounduaries(Point startPoints[], int numberOfPoints);
 void generateCoordinatorsInBounduaries(double*);
 double generateCoordinatorInBounduaries();
 double generateNumberInBoundaries();
-bool isCoordinatorInBounduaries(double);
-bool isNumberInBounduaries(double);
 
 #endif

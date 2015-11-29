@@ -52,10 +52,14 @@ void computeComplexBoxSolution(const int numberOfPolyhedronPoints) {
 	
 	generatePointsInBounduaries(startPoints, numberOfPolyhedronPoints);
 	calculatePointsObjectiveFunctionValue(startPoints, numberOfPolyhedronPoints);
+	
+	printPoints(startPoints, numberOfPolyhedronPoints);
+	
 	reflectedPoint = reflectPoint(startPoints, numberOfPolyhedronPoints);
 	
+	printf("Reflected point value: %lf\n", reflectedPoint.objectiveFunctionValue);
 	printDoubleGroup(reflectedPoint.coordinators, NUMBER_OF_COORDINATORS);
-	printPoints(startPoints, numberOfPolyhedronPoints);
+	//printPoints(startPoints, numberOfPolyhedronPoints);
 	
 	/*	
 	if(isMinimumRadiusConstraintFulfiled(startPoints, numberOfPolyhedronPoints)) {

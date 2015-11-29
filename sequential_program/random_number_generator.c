@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <time.h>
 #include "random_number_generator.h"
+#include "complex_box.h"
+#include "problem_definition.h"
 
 void generatePointsInBounduaries(Point startPoints[], int numberOfPoints) {
 	int i ;
@@ -38,18 +40,4 @@ double generateNumberInBoundaries() {
 	randomNumber = LOWER_POINT_BOUNDARY + (UPPER_POINT_BOUNDARY - LOWER_POINT_BOUNDARY)*(rand()/(double)RAND_MAX);
 	
 	return randomNumber;
-}
-
-bool isCoordinatorInBounduaries(double coordinator) {
-	if(isNumberInBounduaries(coordinator)) {
-		return true;
-	}
-	return false;
-}
-
-bool isNumberInBounduaries(double number) {
-	if(LOWER_POINT_BOUNDARY<= number && number <= UPPER_POINT_BOUNDARY) {
-		return true;
-	}
-	return false;
 }

@@ -7,5 +7,8 @@ void calculatePointsObjectiveFunctionValue(Point*, int);
 double calculateObjectiveFunctionValue(double*);
 bool isAdditionalConstraintFulfilled(double*);
 double calculateLeftSideOfAdditionalConstraint(double*);
+bool isPointInBounduaries(Point);
+bool isCoordinatorInBounduaries(double);
+bool isNumberInBounduaries(double);
 
 #endif
