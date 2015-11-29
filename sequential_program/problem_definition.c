@@ -26,7 +26,7 @@ bool isAdditionalConstraintFulfilled(double coordinators[]) {
 	double leftSideAdditionalConstraintValue;
 	
 	leftSideAdditionalConstraintValue = calculateLeftSideOfAdditionalConstraint(coordinators);
-	printf("Left side %lf", leftSideAdditionalConstraintValue);
+	//printf("\nLeft side %lf\n", leftSideAdditionalConstraintValue);
 	if(leftSideAdditionalConstraintValue <= 10 * NUMBER_OF_COORDINATORS) {
 		return true;
 	}

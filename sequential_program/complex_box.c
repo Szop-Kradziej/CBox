@@ -13,7 +13,7 @@ void movePointUntilAdditionalConstraintBeFulfilled(Point points[], int pointInde
 	i = 0;
 	while(!isAdditionalConstraintFulfilled(points[pointIndex].coordinators) && i < MAX_TRY_OF_MOVE_POINT) {
 		movePointHalfWayToCentroid(&points[pointIndex], centroid);
-		printf("\nWHILEcorr: %lf \n", points[pointIndex].coordinators[1]);
+	//	printf("\nWHILEcorr: %lf \n", points[pointIndex].coordinators[1]);
 		i++;
 	}
 }
@@ -97,6 +97,7 @@ Point reflectPoint(Point points[], int numberOfPoints) {
 			else {
 				alpha = alpha / 2;
 				if(alpha > ALPHA_ACCURACY) {
+					printf("ALPHA ACCURACY\n");
 					reflectedPoint = generateReflectedPoint(points[indexOfLastPoint], centroid, alpha);
 				}
 				else {
@@ -107,12 +108,21 @@ Point reflectPoint(Point points[], int numberOfPoints) {
 			}
 		}
 		else {
+			printf("MOVE TO CENTROID CENTER\n");
 			movePointUntilAllConstraintsBeFulfilled(&reflectedPoint, centroid);
-			printf("\nReflectedPoint: %lf \n", reflectedPoint.coordinators[1]);
+			if(alpha > ALPHA_ACCURACY) {
+				printf("ALPHA ACCURACY\n");
+				reflectedPoint = generateReflectedPoint(points[indexOfLastPoint], centroid, alpha);
+			}
+			else {
+				//TODO: Implement this
+				printf("Ups cant generate reflected point for max value point");
+				exit(0);
+			}
+	//		printf("\nReflectedPoint: %lf \n", reflectedPoint.coordinators[1]);
 		}
 		i++;
 	}	
-	
 	return reflectedPoint;
 }
 
@@ -177,7 +187,47 @@ void movePointUntilAllConstraintsBeFulfilled(Point* reflectedPoint, Point centro
 	i = 0;
 	while(((!isAdditionalConstraintFulfilled(reflectedPoint->coordinators)) || (!isPointInBounduaries(*reflectedPoint))) && i < MAX_TRY_OF_MOVE_POINT) {
 		movePointHalfWayToCentroid(reflectedPoint, centroid);
-		printf("\nWHILEReflectedPoint: %lf \n", reflectedPoint->coordinators[1]);
+//		printf("\nWHILEReflectedPoint: %lf \n", reflectedPoint->coordinators[1]);
 		i++;
 	}
+	
+	if(i == MAX_TRY_OF_MOVE_POINT) {
+		printf("Can not move point to the centroid center\n");
+		//exit(0);
+	}
 }
+
+
+bool isDistanceConditionFulfilled(Point points[], int numberOfPoints) {
+	int i,j;
+	
+	for(i = 0; i < numberOfPoints; i++) {
+		for(j = i + 1; j < numberOfPoints; j++) {
+			if(!isTwoPointsDistanceConditionFullfiled(points[i], points[j])) {
+				printf("Distance not fulfilled\n");
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+bool isTwoPointsDistanceConditionFullfiled(Point firstPoint, Point secondPoint) {
+	if(calculateDistanceBetweenTwoPoints(firstPoint, secondPoint) <= DISTANCE_EPSILON) {
+		return true;
+	}
+	return false;
+}
+
+double calculateDistanceBetweenTwoPoints(Point firstPoint, Point secondPoint) {
+	double distance, sum;
+	int i;
+	
+	for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
+		sum += pow((firstPoint.coordinators[i] - secondPoint.coordinators[i]),2);
+	}
+	distance = sqrt(sum);
+	
+	return distance;
+}
+

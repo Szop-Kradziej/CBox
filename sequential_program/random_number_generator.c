@@ -12,10 +12,10 @@ void generatePointsInBounduaries(Point startPoints[], int numberOfPoints) {
 	{
 		generateCoordinatorsInBounduaries(startPoints[i].coordinators);
 		if(isAdditionalConstraintFulfilled(startPoints[i].coordinators)) {
-			printf("Yeap! fulfilled\n");
+		//	printf("Yeap! fulfilled\n");
 		}
 		else {
-			printf("Nope\n");
+		//	printf("Nope\n");
 			movePointUntilAdditionalConstraintBeFulfilled(startPoints,i);
 		}
 	}

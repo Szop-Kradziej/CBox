@@ -47,25 +47,22 @@ bool isInputArgumentSet(int argc) {
 }
 
 void computeComplexBoxSolution(const int numberOfPolyhedronPoints) {
-	Point startPoints[numberOfPolyhedronPoints];
-	Point reflectedPoint;
+	Point points[numberOfPolyhedronPoints];
+	int i;
+
+	generatePointsInBounduaries(points, numberOfPolyhedronPoints);
+	calculatePointsObjectiveFunctionValue(points, numberOfPolyhedronPoints);
 	
-	generatePointsInBounduaries(startPoints, numberOfPolyhedronPoints);
-	calculatePointsObjectiveFunctionValue(startPoints, numberOfPolyhedronPoints);
+	i = 0;
+	while(!isDistanceConditionFulfilled(points, numberOfPolyhedronPoints) && i < MAX_PROGRAM_ITERATIONS) {
+		reflectPoint(points, numberOfPolyhedronPoints);
+		printf("\n\n \t MAIN_STEP \t%d\n\n", i); 
+		//printPoints(points, numberOfPolyhedronPoints);
+		i++;
+	}
 	
-	printPoints(startPoints, numberOfPolyhedronPoints);
-	
-	reflectedPoint = reflectPoint(startPoints, numberOfPolyhedronPoints);
-	
-	printf("Reflected point value: %lf\n", reflectedPoint.objectiveFunctionValue);
-	printDoubleGroup(reflectedPoint.coordinators, NUMBER_OF_COORDINATORS);
-	//printPoints(startPoints, numberOfPolyhedronPoints);
-	
-	/*	
-	if(isMinimumRadiusConstraintFulfiled(startPoints, numberOfPolyhedronPoints)) {
-		printf("MRCF: fulfiled");
-		exit(0);
-	}*/
+	printPoints(points, numberOfPolyhedronPoints);
+	exit(0);
 }
 
 void printPoints(Point points[], int numberOfPoints) {

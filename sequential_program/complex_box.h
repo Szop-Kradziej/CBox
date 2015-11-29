@@ -18,8 +18,8 @@ bool isReflectedPointFulfillConstraints(Point);
 bool isValueOfReflectedPointLessThanMaxValue(Point, Point*, int);
 void replaceMaxValuePointWithReflectedPoint(Point, Point*, int);
 void movePointUntilAllConstraintsBeFulfilled(Point*, Point);
-
-void printPoints2(Point points[], int numberOfPoints);
-void printDoubleGroup2(double group[], int numberOfElements);
+bool isDistanceConditionFulfilled(Point*, int);
+bool isTwoPointsDistanceConditionFullfiled(Point, Point);
+double calculateDistanceBetweenTwoPoints(Point, Point);
 
 #endif
