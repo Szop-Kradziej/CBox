@@ -74,28 +74,44 @@ double calculateHalfWayToCentroidCoordinator(double coordinator, double centroid
 
 Point reflectPoint(Point points[], int numberOfPoints) {
 	Point centroid, reflectedPoint;
-	int indexOfLastPoint;
+	bool isReflectedPointAccepted;
+	double alpha;
+	int indexOfLastPoint, i;
 	indexOfLastPoint = numberOfPoints - 1;
+	alpha = ALPHA;
 	
 	moveMaxValuePointAtLastPosition(points, numberOfPoints);
 	centroid = calculateCentroid(points, indexOfLastPoint);
-	reflectedPoint = generateReflectedPoint(points[indexOfLastPoint], centroid);
-	reflectedPoint.objectiveFunctionValue = calculateObjectiveFunctionValue(reflectedPoint.coordinators);
+	reflectedPoint = generateReflectedPoint(points[indexOfLastPoint], centroid, alpha);
 	
-	if(isReflectedPointFulfillConstraints(reflectedPoint)) {
-		printf("Reflected point fulfill constraints \n ");
-		if(isValueOfReflectedPointLessThanMaxValue(reflectedPoint, points, indexOfLastPoint)) {
-			replaceMaxValuePointWithReflectedPoint(reflectedPoint, points, indexOfLastPoint);
+	isReflectedPointAccepted = false;
+	i = 0;
+	while(!isReflectedPointAccepted && i < MAX_TRY_OF_REFLECTED_POINT) {
+		printf("\t STEP \t  %d \n",i);
+		reflectedPoint.objectiveFunctionValue = calculateObjectiveFunctionValue(reflectedPoint.coordinators);
+		if(isReflectedPointFulfillConstraints(reflectedPoint)) {
+			if(isValueOfReflectedPointLessThanMaxValue(reflectedPoint, points, indexOfLastPoint)) {
+				replaceMaxValuePointWithReflectedPoint(reflectedPoint, points, indexOfLastPoint);
+				isReflectedPointAccepted = true;
+			}
+			else {
+				alpha = alpha / 2;
+				if(alpha > ALPHA_ACCURACY) {
+					reflectedPoint = generateReflectedPoint(points[indexOfLastPoint], centroid, alpha);
+				}
+				else {
+					//TODO: Implement this
+					printf("Ups cant generate reflected point for max value point");
+					exit(0);
+				}
+			}
 		}
 		else {
-			printf("Generate new with with alfa reduced\n");
+			movePointUntilAllConstraintsBeFulfilled(&reflectedPoint, centroid);
+			printf("\nReflectedPoint: %lf \n", reflectedPoint.coordinators[1]);
 		}
-	}
-	else {
-		printf("Oh no reflected point do not fulfill constraints\n");
-		movePointUntilAllConstraintsBeFulfilled(&reflectedPoint, centroid);
-		printf("\nReflectedPoint: %lf \n", reflectedPoint.coordinators[1]);
-	}
+		i++;
+	}	
 	
 	return reflectedPoint;
 }
@@ -124,19 +140,19 @@ int findPointIndexOfMaximumObjectiveFunctionValue(Point points[], int numberOfPo
 	return maxValueIndex;
 }
 
-Point generateReflectedPoint(Point maxValuePoint, Point centroid) {
+Point generateReflectedPoint(Point maxValuePoint, Point centroid, double alpha) {
 	Point reflectedPoint;
 	int i;
 	
 	for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
-		reflectedPoint.coordinators[i] = calculateReflectedPointCoordinator(maxValuePoint.coordinators[i],centroid.coordinators[i]);
+		reflectedPoint.coordinators[i] = calculateReflectedPointCoordinator(maxValuePoint.coordinators[i],centroid.coordinators[i], alpha);
 	}
 	
 	return reflectedPoint;
 }
 
-double calculateReflectedPointCoordinator(double maxValueCoordinator, double centroidCoordinator) {
-	return (1 + ALPHA)*centroidCoordinator - ALPHA*maxValueCoordinator;
+double calculateReflectedPointCoordinator(double maxValueCoordinator, double centroidCoordinator, double alpha) {
+	return (1 + alpha)*centroidCoordinator - alpha*maxValueCoordinator;
 }
 
 bool isReflectedPointFulfillConstraints(Point reflectedPoint) {
