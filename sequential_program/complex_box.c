@@ -110,7 +110,7 @@ Point reflectPoint(Point points[], int numberOfPoints) {
 		else {
 			printf("MOVE TO CENTROID CENTER\n");
 			movePointUntilAllConstraintsBeFulfilled(&reflectedPoint, centroid);
-			if(alpha > ALPHA_ACCURACY) {
+		/*	if(alpha > ALPHA_ACCURACY) {
 				printf("ALPHA ACCURACY\n");
 				reflectedPoint = generateReflectedPoint(points[indexOfLastPoint], centroid, alpha);
 			}
@@ -119,7 +119,7 @@ Point reflectPoint(Point points[], int numberOfPoints) {
 				printf("Ups cant generate reflected point for max value point");
 				exit(0);
 			}
-	//		printf("\nReflectedPoint: %lf \n", reflectedPoint.coordinators[1]);
+	//		printf("\nReflectedPoint: %lf \n", reflectedPoint.coordinators[1]);*/
 		}
 		i++;
 	}	
