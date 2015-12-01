@@ -1,13 +1,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <omp.h>
 #include "problem_definition.h"
 
 void calculatePointsObjectiveFunctionValue(Point points[], int numberOfPoints) {
 	int i;
-	 
-	for(i = 0; i < numberOfPoints; i++) {
-		points[i].objectiveFunctionValue = calculateObjectiveFunctionValue(points[i].coordinators);
+	#pragma omp parallel
+	{
+		#pragma omp for
+			for(i = 0; i < numberOfPoints; i++) {
+				points[i].objectiveFunctionValue = calculateObjectiveFunctionValue(points[i].coordinators);
+			}
 	}
 }
 
@@ -16,6 +20,7 @@ double calculateObjectiveFunctionValue(double coordinators[]) {
 	double objectiveFunctionValue = 0;
 	
 	// Sum up from 1 to n-1 -> 0 to n-2
+	#pragma omp parallel for default(shared) reduction(+:objectiveFunctionValue) private(i)
 	for(i = 0; i < NUMBER_OF_COORDINATORS - 1; i++) {
 		objectiveFunctionValue += 100 * pow((coordinators[i + 1] - pow(coordinators[i], 2)), 2) + pow((1 - coordinators[i]), 2);
 	}
@@ -37,6 +42,7 @@ double calculateLeftSideOfAdditionalConstraint(double coordinators[]) {
 	int i;
 	double leftSideAdditionalConstraintValue = 0;
 	
+	#pragma omp parallel for default(shared) reduction(+:leftSideAdditionalConstraintValue) private(i)
 	for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
 		// Sum up from 1 to n:
 		leftSideAdditionalConstraintValue += pow((coordinators[i] - (i + 1)), 2);

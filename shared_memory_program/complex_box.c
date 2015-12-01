@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <omp.h>
 #include "complex_box.h"
 #include "problem_definition.h"
 
@@ -51,6 +52,7 @@ double calculateCentroidCoordinator(Point points[], int numberOfAcceptedPoints, 
 	int i;
 	sum = 0.0;
 	
+	#pragma omp parallel for default(shared) reduction(+:sum) private(i)
 	for(i = 0; i < numberOfAcceptedPoints; i++) {
 		sum += points[i].coordinators[coordinatorIndex];
 	}
@@ -62,9 +64,12 @@ double calculateCentroidCoordinator(Point points[], int numberOfAcceptedPoints, 
 
 void movePointHalfWayToCentroid(Point* point, Point centroid) {
 	int i;
-	
-	for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
-		point->coordinators[i] = calculateHalfWayToCentroidCoordinator(point->coordinators[i], centroid.coordinators[i]);
+	#pragma omp parallel
+	{
+		#pragma omp for
+		for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
+			point->coordinators[i] = calculateHalfWayToCentroidCoordinator(point->coordinators[i], centroid.coordinators[i]);
+		}
 	}
 }
 
@@ -87,7 +92,7 @@ Point reflectPoint(Point points[], int numberOfPoints) {
 	isReflectedPointAccepted = false;
 	i = 0;
 	while(!isReflectedPointAccepted && i < MAX_TRY_OF_REFLECTED_POINT) {
-		printf("\t STEP \t  %d \n",i);
+	//	printf("\t STEP \t  %d \n",i);
 		reflectedPoint.objectiveFunctionValue = calculateObjectiveFunctionValue(reflectedPoint.coordinators);
 		if(isReflectedPointFulfillConstraints(reflectedPoint)) {
 			if(isValueOfReflectedPointLessThanMaxValue(reflectedPoint, points, indexOfLastPoint)) {
@@ -97,7 +102,7 @@ Point reflectPoint(Point points[], int numberOfPoints) {
 			else {
 				alpha = alpha / 2;
 				if(alpha > ALPHA_ACCURACY) {
-					printf("ALPHA ACCURACY\n");
+			//		printf("ALPHA ACCURACY\n");
 					reflectedPoint = generateReflectedPoint(points[indexOfLastPoint], centroid, alpha);
 				}
 				else {
@@ -108,7 +113,7 @@ Point reflectPoint(Point points[], int numberOfPoints) {
 			}
 		}
 		else {
-			printf("MOVE TO CENTROID CENTER\n");
+		//	printf("MOVE TO CENTROID CENTER\n");
 			movePointUntilAllConstraintsBeFulfilled(&reflectedPoint, centroid);
 		/*	if(alpha > ALPHA_ACCURACY) {
 				printf("ALPHA ACCURACY\n");
@@ -153,9 +158,12 @@ int findPointIndexOfMaximumObjectiveFunctionValue(Point points[], int numberOfPo
 Point generateReflectedPoint(Point maxValuePoint, Point centroid, double alpha) {
 	Point reflectedPoint;
 	int i;
-	
-	for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
-		reflectedPoint.coordinators[i] = calculateReflectedPointCoordinator(maxValuePoint.coordinators[i],centroid.coordinators[i], alpha);
+	#pragma omp parallel 
+	{
+		#pragma omp for
+		for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
+			reflectedPoint.coordinators[i] = calculateReflectedPointCoordinator(maxValuePoint.coordinators[i],centroid.coordinators[i], alpha);
+		}
 	}
 	
 	return reflectedPoint;
@@ -201,14 +209,19 @@ void movePointUntilAllConstraintsBeFulfilled(Point* reflectedPoint, Point centro
 bool isDistanceConditionFulfilled(Point points[], int numberOfPoints) {
 	int i,j;
 	
+	//#pragma omp parallel
+	
+	//	#pragma omp for firstprivate(j)
+	
 	for(i = 0; i < numberOfPoints; i++) {
 		for(j = i + 1; j < numberOfPoints; j++) {
 			if(!isTwoPointsDistanceConditionFullfiled(points[i], points[j])) {
-				printf("Distance not fulfilled\n");
+			//	printf("Distance not fulfilled\n");
 				return false;
 			}
 		}
 	}
+
 	return true;
 }
 
@@ -222,10 +235,13 @@ bool isTwoPointsDistanceConditionFullfiled(Point firstPoint, Point secondPoint) 
 double calculateDistanceBetweenTwoPoints(Point firstPoint, Point secondPoint) {
 	double distance, sum;
 	int i;
-	
+	sum = 0;
+	#pragma omp parallel for default(shared) reduction(+:sum) private(i)
 	for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
+	//	#pragma omp atomic
 		sum += pow((firstPoint.coordinators[i] - secondPoint.coordinators[i]),2);
 	}
+
 	distance = sqrt(sum);
 	
 	return distance;
