@@ -7,15 +7,14 @@
 
 void generatePointsInBounduaries(Point startPoints[], int numberOfPoints) {
 	int i ;
-	
+
 	for(i = 0; i < numberOfPoints; i++)
 	{
 		generateCoordinatorsInBounduaries(startPoints[i].coordinators);
+		
 		if(isAdditionalConstraintFulfilled(startPoints[i].coordinators)) {
-		//	printf("Yeap! fulfilled\n");
 		}
 		else {
-		//	printf("Nope\n");
 			movePointUntilAdditionalConstraintBeFulfilled(startPoints,i);
 		}
 	}
@@ -23,7 +22,7 @@ void generatePointsInBounduaries(Point startPoints[], int numberOfPoints) {
 
 void generateCoordinatorsInBounduaries(double coordinators[]) {
 	int i;
-	
+
 	for(i = 0; i < NUMBER_OF_COORDINATORS; i++) {
 		coordinators[i] = generateCoordinatorInBounduaries();
 	}
@@ -37,7 +36,7 @@ double generateCoordinatorInBounduaries() {
 
 double generateNumberInBoundaries() {
 	double randomNumber;
-	randomNumber = LOWER_POINT_BOUNDARY + (UPPER_POINT_BOUNDARY - LOWER_POINT_BOUNDARY)*(rand()/(double)RAND_MAX);
+	randomNumber = LOWER_POINT_BOUNDARY + (UPPER_POINT_BOUNDARY - LOWER_POINT_BOUNDARY)*(drand48()/(double)RAND_MAX);
 	
 	return randomNumber;
 }

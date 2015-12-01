@@ -3,7 +3,6 @@
 #include <time.h>
 #include "constant_values.h"
 #include "random_number_generator.h"
-#include "minimum_radius_constraint.h"
 #include "problem_definition.h"
 #include "complex_box.h"
 
@@ -16,7 +15,7 @@ void printDoubleGroup(double*, int);
 int main(int argc, char* argv[]) {
 	
 	int numberOfPolyhedronPoints;
-	srand(time(NULL));
+	srand48(time(NULL));
 	
 	numberOfPolyhedronPoints = getInputArgument(argc, argv);
 	computeComplexBoxSolution(numberOfPolyhedronPoints);
@@ -56,8 +55,6 @@ void computeComplexBoxSolution(const int numberOfPolyhedronPoints) {
 	i = 0;
 	while(!isDistanceConditionFulfilled(points, numberOfPolyhedronPoints) && i < MAX_PROGRAM_ITERATIONS) {
 		reflectPoint(points, numberOfPolyhedronPoints);
-		printf("\n\n \t MAIN_STEP \t%d\n\n", i); 
-		//printPoints(points, numberOfPolyhedronPoints);
 		i++;
 	}
 	
