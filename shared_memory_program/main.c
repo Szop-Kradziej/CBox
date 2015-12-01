@@ -57,8 +57,6 @@ void computeComplexBoxSolution(const int numberOfPolyhedronPoints) {
 	i = 0;
 	while(!isDistanceConditionFulfilled(points, numberOfPolyhedronPoints) && i < MAX_PROGRAM_ITERATIONS) {
 		reflectPoint(points, numberOfPolyhedronPoints);
-	//	printf("\n\n \t MAIN_STEP \t%d\n\n", i); 
-		//printPoints(points, numberOfPolyhedronPoints);
 		i++;
 	}
 	
